@@ -1,7 +1,6 @@
 <script>
 	import initApp from '@/common/appInit.js';
 	import openApp from '@/common/openApp.js';
-	import checkIsAgree from '@/pages/uni-agree/utils/uni-agree.js';
 	export default {
 		globalData: {
 			searchText: '',
