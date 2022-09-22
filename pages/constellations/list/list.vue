@@ -23,9 +23,6 @@
 
 <script>
     import {constellations} from "@/data/constellations.js";
-	import {
-		mapGetters,
-	} from 'vuex';
 	export default {
 		components: {
 		},
@@ -35,12 +32,10 @@
 			}
 		},
 		computed: {
-			...mapGetters({
-				hasLogin: 'user/hasLogin'
-			})
-		},
-		onLoad() {
 			
+		},
+		async onLoad() {
+					
 		},
 		methods: {
 			change(e) {

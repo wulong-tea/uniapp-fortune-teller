@@ -1,3 +1,4 @@
 .DS_Store
 unpackage/
 .hbuilderx/launch.json
+node_modules/

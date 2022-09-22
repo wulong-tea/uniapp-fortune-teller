@@ -1,0 +1,9 @@
+{
+  "name": "cloud-obj-main",
+  "dependencies": {
+    "request-promise": "^4.2.6"
+  },
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
