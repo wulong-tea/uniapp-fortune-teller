@@ -1,43 +1,45 @@
 <template>
-    <view>
-        {{constellation}}
-    </view>
+    <view>{{ constellation }}</view>
+    <day></day>
 </template>
 
 <script>
-    import {constellations} from "@/data/constellations.js";
-    export default {
-        data() {
-            return {
-                constellation: ""
+import { constellations } from '@/data/constellations.js';
+import { getDBId } from '@/pages/constellations/details/utils.js';
+import day from '@/pages/constellations/details/components/day.vue';
+export default {
+    components() {
+        day;
+    },
+    data() {
+        return {
+            constellation: null
+        };
+    },
+    onLoad(option) {
+        const cons = constellations[option.index];
+        this.getConstellations(cons, 'today');
+    },
+    computed: {},
+    methods: {
+        async getConstellations(cons, type) {
+            const cloudObj = uniCloud.importObject('cloud-obj-main');
+            try {
+                let res = uni.getStorageSync(getDBId(cons.name, type));
+                if (!res) {
+                    res = await cloudObj.getConstellations({ name: cons.name, type: type });
+                    uni.setStorageSync(getDBId(cons.name, type), res);
+                }
+                this.constellation = res;
+            } catch (e) {
+                uni.showModal({
+                    title: '数据请求失败' + e.errorMsg,
+                    showCancel: false
+                });
             }
-        },
-        onLoad(option) {
-            const cons = constellations[option.index];
-            this.getConstellations(cons, "today");
-        },
-        computed: {
-          getConstellations() {
-          	return async function (cons, type) {
-                const cloudObj = uniCloud.importObject('cloud-obj-main');
-                try {
-                    const res = await cloudObj.getConstellations({name: cons.name, type: type}); 
-                    this.constellation = res;
-                } catch (e) {
-                    uni.showModal({
-                        title: '创建失败',
-                        content: e.errMsg,
-                        showCancel: false
-                    })
-                }	
-            };
-          }  
-        },
-        methods: {
         }
     }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -51,7 +51,7 @@ async function getConsFromDb(id) {
     .doc(id)
     .get()
     .then((res) => {
-      return res.data;
+      return res.data[0];
     })
     .catch((err) => {
       return {

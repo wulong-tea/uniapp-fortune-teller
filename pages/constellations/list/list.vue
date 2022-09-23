@@ -3,10 +3,10 @@
 		<!-- #ifdef APP-PLUS -->
 		<status-bar />
 		<!-- #endif -->
-	<!-- 宫格 -->
+        <!-- 宫格 -->
 		<!-- <uni-section :title="$t('grid.grid')" style="margin: 0;" type="line"></uni-section> -->
 		<view class="body">
-			<uni-grid :column="3" :highlight="true" @change="change">
+			<uni-grid :column="3" :highlight="true" @change="onGridItemTap">
 				<template v-for="(item,i) in gridList">
 					<uni-grid-item :index="i" :key="i" v-if="i<12">
 						<view class="grid-item-box">
@@ -18,6 +18,11 @@
 				</template>
 			</uni-grid>
 		</view>
+        <view class="chinese-fortune-conainer" v-if="chineseFortune">
+            <view class="font-bold">{{chineseFortune.date}}  {{chineseFortune.weekday}} {{chineseFortune.lunarYear}} {{chineseFortune.animalsYear}}年 {{chineseFortune.lunar}} {{chineseFortune.holiday}} {{chineseFortune.desc}}</view>
+            <view class="border-top"><text class="font-bold">易：</text>{{chineseFortune.suit}}</view>
+            <view class="border-top"><text class="font-bold font-red">忌：</text>{{chineseFortune.avoid}}</view>
+        </view>
 	</view>
 </template>
 
@@ -28,31 +33,42 @@
 		},
 		data() {
 			return {
-				gridList: constellations
+				gridList: constellations,
+                chineseFortune: null
 			}
-		},
-		computed: {
-			
 		},
 		async onLoad() {
-					
+			this.getChineseFortune();
 		},
 		methods: {
-			change(e) {
-				// uni.showToast({
-				// 	title:this.$t('grid.clickTip') + " " + `${e.detail.index}` + " " + this.$t('grid.clickTipGrid'),
-				// 	icon: 'none'
-				// })
+			onGridItemTap(e) {
                 uni.navigateTo({
-                    url: "/pages/constellations/details/details?index=" + e.detail.index
+                    url: `/pages/constellations/details/details?index=${e.detail.index}`
                 });
-			},
-			/**
-			 * banner加载后触发的回调
-			 */
-			onqueryload(data) {
-			}
-		}
+			}, 
+            async getChineseFortune() {
+                const cloudObj = uniCloud.importObject('cloud-obj-main');
+                try {
+                    const date = new Date();
+                    const id =  date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+                    let res = uni.getStorageSync(id);
+                    if(!res) {
+                        res = await cloudObj.getChineseFortune();
+                        uni.setStorageSync(id, res);
+                    }
+                    this.chineseFortune = res.data;
+                } catch (e) {
+                    uni.showModal({
+                        title: '请求万年历失败',
+                        content: e.errMsg,
+                        showCancel: false
+                    })
+                }
+            }
+		},
+        computed: {
+        	
+        }
 	}
 </script>
 
@@ -163,4 +179,17 @@
 	.uni-input-placeholder {
 		font-size: 28rpx;
 	}
+    .chinese-fortune-conainer {
+      margin: 30rpx;
+    }
+    .border-top {
+      margin-top: 10rpx;
+      border-top: 1rpx solid #dcdcdc;
+    }
+    .font-red {
+      color: red;
+    }
+    .font-bold {
+      font-weight: bold;
+    }
 </style>
