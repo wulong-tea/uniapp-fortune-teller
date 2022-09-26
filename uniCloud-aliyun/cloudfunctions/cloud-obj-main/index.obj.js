@@ -8,18 +8,14 @@ module.exports = {
 
 	},
 
-	async getConstellations(param) {
-        const request = require("./request-constellations.js");
-		return {
-			data: await request.requestConstellations(param)
-		}
+	async getHoroscope(param) {
+        const request = require("./request-horoscope.js");
+		return await request.requestHoroscope(param);
 	},
     
     async getChineseFortune() {
         const request = require("./request-chinese-fortune.js");
-        return {
-            data: await request.requestChineseFortune()
-        };
+        return await request.requestChineseFortune();
     }
 	
 }

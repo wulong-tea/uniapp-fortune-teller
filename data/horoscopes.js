@@ -1,4 +1,4 @@
-export const constellations = [{
+export const horoscopes = [{
     "name": "白羊座",
     "icon": "/static/constellations/by.png",
     "date": "3.21 ~ 4.19",

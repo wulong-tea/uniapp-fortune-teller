@@ -39,7 +39,7 @@ export default {
 			"/",//注意入口页必须直接写 "/"
 			{"pattern":/^\/pages\/list.*/},	//支持正则表达式
 			{"pattern":/^\/pages\/ucenter\/login-page.*/},
-            {"pattern":/^\/pages\/constellations\/*/},
+            {"pattern":/^\/pages\/horoscope\/*/},
 			"/pages/common/webview/webview",
 			"/pages/grid/grid",
 			"/pages/ucenter/ucenter",

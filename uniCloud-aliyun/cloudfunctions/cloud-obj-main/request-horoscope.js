@@ -1,7 +1,7 @@
 const rp = require("request-promise");
-const collectionName = "constellations";
+const collectionName = "horoscope";
 
-const requestNames = [
+const horoscopeNames = [
   "白羊座",
   "金牛座",
   "双子座",
@@ -19,17 +19,17 @@ const requestNames = [
 const requestTypes = ["today", "tomorrow", "week", "month", "year"];
 const db = uniCloud.database();
 // 云函数入口函数
-const requestConstellations = async (event) => {
+const requestHoroscope = async (event) => {
   let name = event.name;
   let type = event.type;
   let id = event.id ? event.id : getDbId(name, type);
-  if (!requestNames.includes(name) || !requestTypes.includes(type)) {
+  if (!horoscopeNames.includes(name) || !requestTypes.includes(type)) {
     return {
       err: `Invalid name or type: ${name}, ${type}`,
     };
   }
   let result = await getConsFromDb(id);
-  if (!result.err && result.length > 0) {
+  if (result && !result.err && result.length > 0) {
     return result;
   }
   let responseData = await requestCons(name, type);
@@ -120,7 +120,7 @@ function getKeyDate(type) {
 }
 
 module.exports = {
-    requestConstellations
+    requestHoroscope
 }
 
 // remote data examples

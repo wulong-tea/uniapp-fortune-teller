@@ -1,7 +1,7 @@
 {
 	"pages": [
         {
-        	"path": "pages/constellations/list/list",
+        	"path": "pages/horoscope/list/list",
         	"style": {
         		//#ifndef MP
         		"navigationStyle": "custom"
@@ -9,7 +9,7 @@
         	}
         },
         {
-            "path" : "pages/constellations/details/details",
+            "path" : "pages/horoscope/details/details",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
