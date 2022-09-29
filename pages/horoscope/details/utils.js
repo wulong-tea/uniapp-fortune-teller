@@ -9,7 +9,8 @@ export const getHoroscope = async (cons, type) => {
             });
             uni.setStorageSync(getDBId(cons.name, type), res);
         }
-        return res;
+        console.log(res);
+        return res.data;
     } catch (e) {
         uni.showModal({
             title: '数据请求失败' + e.errorMsg,

@@ -42,7 +42,7 @@
 import { horoscopes } from '@/data/horoscopes.js';
 import { getHoroscope } from '@/pages/horoscope/details/utils.js';
 export default {
-    name: 'day',
+    name: 'tomorrow',
     props: {
         index: {
             type: Number

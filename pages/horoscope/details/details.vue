@@ -1,24 +1,29 @@
 <template>
-    <day></day>
+    <day :index="index"></day>
 </template>
 
 <script>
 'use strict';
-import { horoscopes } from '@/data/horoscopes.js';
-import { getHoroscope } from '@/pages/horoscope/details/utils.js';
 import day from '@/pages/horoscope/details/components/day.vue';
+import tomorrow from '@/pages/horoscope/details/components/tomorrow.vue';
+import week from '@/pages/horoscope/details/components/week.vue';
+import month from '@/pages/horoscope/details/components/month.vue';
+import year from '@/pages/horoscope/details/components/year.vue';
 export default {
     components: {
-        day
+        day,
+        tomorrow,
+        week,
+        month,
+        year
     },
     data() {
         return {
-            i: 1
+            index: 0
         };
     },
     async onLoad(option) {
-        const cons = horoscopes[option.index];
-        this.horoscope = await getHoroscope(cons, 'today');
+        this.index = option.index || 0;
     },
     computed: {},
     methods: {}
