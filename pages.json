@@ -20,8 +20,8 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-starter",
-		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTitleText": "星座运势",
+		"navigationBarBackgroundColor": "#9eb9ec",
 		"backgroundColor": "#F8F8F8",
 		"enablePullDownRefresh": false,
 		// "maxWidth":375,

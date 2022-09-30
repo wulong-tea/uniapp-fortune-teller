@@ -1,11 +1,11 @@
 <template>
-    <view class="warp">
+    <view class="body">
         <!-- #ifdef APP-PLUS -->
         <status-bar />
         <!-- #endif -->
         <!-- 宫格 -->
         <!-- <uni-section :title="$t('grid.grid')" style="margin: 0;" type="line"></uni-section> -->
-        <view class="body">
+        <view class="grid">
             <uni-grid :column="3" :highlight="true" @change="onGridItemTap">
                 <template v-for="(item, i) in gridList">
                     <uni-grid-item :index="i" :key="i" v-if="i < 12">
@@ -80,42 +80,17 @@ export default {
 </script>
 
 <style>
-/* #ifndef APP-NVUE */
-page {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    background-color: #fff;
-    min-height: 100%;
-    height: auto;
-}
-view {
-    font-size: 14px;
-    line-height: inherit;
-}
 .body {
-    /* #ifndef APP-NVUE */
-    display: flex;
-    /* #endif */
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0;
-    font-size: 14px;
-    background-color: #ffffff;
+    background-image: -webkit-linear-gradient(60deg, rgba(218, 169, 215, 0.637), rgba(128, 174, 235, 0.904));
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
-/* #endif */
 
-/* #ifdef APP-NVUE */
-.warp {
-    background-color: #fff;
-}
-/* #endif */
-
-.body {
+.grid {
     flex-direction: column;
     padding: 15px;
-    background-color: #ffffff;
+    background: transparent;
 }
 
 .image {
@@ -127,12 +102,6 @@ view {
     text-align: center;
     font-size: 26rpx;
     margin-top: 10rpx;
-}
-
-.body {
-    /* #ifndef APP-NVUE */
-    display: block;
-    /* #endif */
 }
 
 .grid-item-box {
@@ -155,37 +124,6 @@ view {
     height: 400rpx;
 }
 
-.search-icons {
-    padding: 16rpx;
-}
-
-.search-container-bar {
-    /* #ifndef APP-NVUE */
-    display: flex;
-    /* #endif */
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    background-color: #fff;
-}
-
-/* #ifndef APP-NVUE || VUE3*/
-/deep/
-	/* #endif */
-	.uni-searchbar__box {
-    border-width: 0;
-}
-
-/* #ifndef APP-NVUE || VUE3 */
-/deep/
-	/* #endif */
-	.uni-input-placeholder {
-    font-size: 28rpx;
-}
 .chinese-fortune-conainer {
     margin: 30rpx;
 }

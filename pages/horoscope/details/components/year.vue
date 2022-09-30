@@ -1,38 +1,27 @@
 <!-- 组件开发文档：https://uniapp.dcloud.net.cn/tutorial/vue3-components.html -->
 
 <template>
-    <view class="component">
+    <view class="component" v-if="horoscope">
         <view class="rcorners">
-            <text>{{ cons.symbol }} {{ horoscope.name }} {{ horoscope.datetime }}</text>
-        </view>
-        <view class="border-none">
-            <text>{{ cons.symbol }} 速配星座：{{ horoscope.QFriend }}</text>
+            <text user-select>{{ horoscope.symbol }} {{ horoscope.name }} {{ horoscope.date }}</text>
         </view>
         <view class="border-top">
-            <text>{{ cons.symbol }} 我的运势：{{ horoscope.summary }}</text>
+            <text user-select>{{ horoscope.symbol }} 幸运宝石：{{ horoscope.luckeyStone }}</text>
         </view>
         <view class="border-top">
-            <view>
-                <text>{{ cons.symbol }} 总体运势：{{ horoscope.all }}</text>
-            </view>
-            <view class="margin-top">
-                <text>{{ cons.symbol }} 幸运颜色：{{ horoscope.color }}</text>
-            </view>
-            <view class="margin-top">
-                <text>{{ cons.symbol }} 幸运数字：{{ horoscope.number }}</text>
-            </view>
-            <view class="margin-top">
-                <text>{{ cons.symbol }} 健康指数：{{ horoscope.health }}</text>
-            </view>
-            <view class="margin-top">
-                <text>{{ cons.symbol }} 爱情指数：{{ horoscope.love }}</text>
-            </view>
-            <view class="margin-top">
-                <text>{{ cons.symbol }} 工作指数：{{ horoscope.work }}</text>
-            </view>
-            <view class="margin-top">
-                <text>{{ cons.symbol }} 金钱指数：{{ horoscope.money }}</text>
-            </view>
+            <text user-select>{{ horoscope.symbol }} 年度密码：{{ horoscope.mima.info }}\n\n{{ horoscope.mima.text[0] }}</text>
+        </view>
+        <view class="border-top">
+            <text user-select>{{ horoscope.symbol }} 健康运势：{{ horoscope.health[0] }}</text>
+        </view>
+        <view class="border-top">
+            <text user-select>{{ horoscope.symbol }} 爱情运势：{{ horoscope.love[0] }}</text>
+        </view>
+        <view class="border-top">
+            <text user-select>{{ horoscope.symbol }} 事业运势：{{ horoscope.career[0] }}</text>
+        </view>
+        <view class="border-top">
+            <text user-select>{{ horoscope.symbol }} 财富运势：{{ horoscope.finance[0] }}</text>
         </view>
     </view>
 </template>
@@ -52,13 +41,11 @@ export default {
     mounted() {},
     methods: {},
     async created() {
-        this.cons = horoscopes[this.index];
-        this.horoscope = await getHoroscope(horoscopes[this.index], 'today');
+        this.horoscope = await getHoroscope(horoscopes[this.index], 'year');
     },
     data() {
         return {
-            cons: '',
-            horoscope: ''
+            horoscope: null
         };
     }
 };

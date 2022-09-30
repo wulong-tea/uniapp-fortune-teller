@@ -1,37 +1,37 @@
 <!-- 组件开发文档：https://uniapp.dcloud.net.cn/tutorial/vue3-components.html -->
 
 <template>
-    <view class="component">
+    <view class="component" v-if="horoscope">
         <view class="rcorners">
-            <text>{{ cons.symbol }} {{ horoscope.name }} {{ horoscope.datetime }}</text>
+            <text>{{ horoscope.symbol }} {{ horoscope.name }} {{ horoscope.datetime }}</text>
         </view>
         <view class="border-none">
-            <text>{{ cons.symbol }} 速配星座：{{ horoscope.QFriend }}</text>
+            <text>{{ horoscope.symbol }} 速配星座：{{ horoscope.QFriend }}</text>
         </view>
         <view class="border-top">
-            <text>{{ cons.symbol }} 我的运势：{{ horoscope.summary }}</text>
+            <text>{{ horoscope.symbol }} 我的运势：{{ horoscope.summary }}</text>
         </view>
         <view class="border-top">
             <view>
-                <text>{{ cons.symbol }} 总体运势：{{ horoscope.all }}</text>
+                <text>{{ horoscope.symbol }} 总体运势：{{ horoscope.all }}</text>
             </view>
             <view class="margin-top">
-                <text>{{ cons.symbol }} 幸运颜色：{{ horoscope.color }}</text>
+                <text>{{ horoscope.symbol }} 幸运颜色：{{ horoscope.color }}</text>
             </view>
             <view class="margin-top">
-                <text>{{ cons.symbol }} 幸运数字：{{ horoscope.number }}</text>
+                <text>{{ horoscope.symbol }} 幸运数字：{{ horoscope.number }}</text>
             </view>
             <view class="margin-top">
-                <text>{{ cons.symbol }} 健康指数：{{ horoscope.health }}</text>
+                <text>{{ horoscope.symbol }} 健康指数：{{ horoscope.health }}</text>
             </view>
             <view class="margin-top">
-                <text>{{ cons.symbol }} 爱情指数：{{ horoscope.love }}</text>
+                <text>{{ horoscope.symbol }} 爱情指数：{{ horoscope.love }}</text>
             </view>
             <view class="margin-top">
-                <text>{{ cons.symbol }} 工作指数：{{ horoscope.work }}</text>
+                <text>{{ horoscope.symbol }} 工作指数：{{ horoscope.work }}</text>
             </view>
             <view class="margin-top">
-                <text>{{ cons.symbol }} 金钱指数：{{ horoscope.money }}</text>
+                <text>{{ horoscope.symbol }} 金钱指数：{{ horoscope.money }}</text>
             </view>
         </view>
     </view>
@@ -42,7 +42,7 @@
 import { horoscopes } from '@/data/horoscopes.js';
 import { getHoroscope } from '@/pages/horoscope/details/utils.js';
 export default {
-    name: 'tomorrow',
+    name: 'day',
     props: {
         index: {
             type: Number
@@ -52,13 +52,11 @@ export default {
     mounted() {},
     methods: {},
     async created() {
-        this.cons = horoscopes[this.index];
-        this.horoscope = await getHoroscope(horoscopes[this.index], 'today');
+        this.horoscope = await getHoroscope(horoscopes[this.index], 'tomorrow');
     },
     data() {
         return {
-            cons: '',
-            horoscope: ''
+            horoscope: null
         };
     }
 };
