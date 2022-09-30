@@ -2,18 +2,18 @@ const rp = require("request-promise");
 const collectionName = "horoscope";
 
 const horoscopeNames = [
-    "白羊座",
-    "金牛座",
-    "双子座",
-    "巨蟹座",
-    "狮子座",
-    "处女座",
-    "天秤座",
-    "天蝎座",
-    "射手座",
-    "摩羯座",
-    "水瓶座",
-    "双鱼座",
+    "baiyang",
+    "jinniu",
+    "shuangzi",
+    "juxie",
+    "shizi",
+    "chunv",
+    "tianping",
+    "tianxie",
+    "sheshou",
+    "mojie",
+    "shuiping",
+    "shuangyu",
 ];
 
 const requestTypes = ["today", "tomorrow", "week", "month", "year"];
@@ -30,12 +30,14 @@ const requestHoroscope = async (event) => {
     }
     let result = await getConsFromDb(id);
     if (result && !result.err && result.length > 0) {
+        console.log("====== cloud obj 数据库命中：", result);
         return result;
     }
     let responseData = await requestCons(name, type);
-    if (responseData.err) {
+    if (!responseData || responseData.err) {
         return responseData;
     }
+    console.log("====== cloud obj 聚合数据命中：", result);
     await insertOrUpdateToDb(id, responseData);
     return await getConsFromDb(id);
 };

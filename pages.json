@@ -21,7 +21,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "星座运势",
-		"navigationBarBackgroundColor": "#9eb9ec",
+		"navigationBarBackgroundColor": "#e4c8e6",
 		"backgroundColor": "#F8F8F8",
 		"enablePullDownRefresh": false,
 		// "maxWidth":375,

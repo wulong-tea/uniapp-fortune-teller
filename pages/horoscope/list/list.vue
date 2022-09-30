@@ -81,7 +81,7 @@ export default {
 
 <style>
 .body {
-    background-image: -webkit-linear-gradient(60deg, rgba(218, 169, 215, 0.637), rgba(128, 174, 235, 0.904));
+    background-image: -webkit-linear-gradient(120deg, rgba(128, 174, 235, 0.904), rgba(218, 169, 215, 0.637));
     position: absolute;
     width: 100%;
     height: 100%;

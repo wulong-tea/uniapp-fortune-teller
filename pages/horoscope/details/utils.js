@@ -1,13 +1,16 @@
 export const getHoroscope = async (horoscope, type) => {
     const cloudObj = uniCloud.importObject('cloud-obj-main');
     try {
-        let res = uni.getStorageSync(getDBId(horoscope.name, type));
-        if (!res) {
+        let res = uni.getStorageSync(getDBId(horoscope.id, type));
+        if (!res || !res.data) {
             res = await cloudObj.getHoroscope({
-                name: horoscope.name,
+                name: horoscope.id,
                 type: type
             });
-            uni.setStorageSync(getDBId(horoscope.name, type), res);
+            if (!res || !res.data) {
+                throw res;
+            }
+            uni.setStorageSync(getDBId(horoscope.id, type), res);
         }
         console.log(res);
         res.data.symbol = horoscope.symbol;
@@ -15,10 +18,10 @@ export const getHoroscope = async (horoscope, type) => {
     } catch (e) {
         console.log(e);
         uni.showModal({
-            title: '数据请求失败' + e.errorMsg,
+            title: '数据请求失败' + JSON.stringify(e.err.reason),
             showCancel: false
         });
-        return e;
+        throw e;
     }
 }
 
