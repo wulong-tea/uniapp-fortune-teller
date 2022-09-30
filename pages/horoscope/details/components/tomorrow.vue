@@ -39,7 +39,6 @@
 
 <script>
 'use strict';
-import { horoscopes } from '@/data/horoscopes.js';
 import { getHoroscope } from '@/pages/horoscope/details/utils.js';
 export default {
     name: 'day',
@@ -52,7 +51,7 @@ export default {
     mounted() {},
     methods: {},
     async created() {
-        this.horoscope = await getHoroscope(horoscopes[this.index], 'tomorrow');
+        this.horoscope = await getHoroscope(this.index, 'tomorrow');
     },
     data() {
         return {

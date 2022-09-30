@@ -1,4 +1,9 @@
-export const getHoroscope = async (horoscope, type) => {
+import {
+    horoscopes
+} from "@/data/horoscopes.js";
+
+export const getHoroscope = async (index, type) => {
+    const horoscope = horoscopes[index];
     const cloudObj = uniCloud.importObject('cloud-obj-main');
     try {
         let res = uni.getStorageSync(getDBId(horoscope.id, type));

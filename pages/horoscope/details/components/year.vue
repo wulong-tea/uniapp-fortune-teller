@@ -28,7 +28,6 @@
 
 <script>
 'use strict';
-import { horoscopes } from '@/data/horoscopes.js';
 import { getHoroscope } from '@/pages/horoscope/details/utils.js';
 export default {
     name: 'year',
@@ -41,7 +40,7 @@ export default {
     mounted() {},
     methods: {},
     async created() {
-        this.horoscope = await getHoroscope(horoscopes[this.index], 'year');
+        this.horoscope = await getHoroscope(this.index, 'year');
     },
     data() {
         return {
