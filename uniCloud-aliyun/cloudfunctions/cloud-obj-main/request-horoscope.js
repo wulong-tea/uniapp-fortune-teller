@@ -1,35 +1,15 @@
 const rp = require("request-promise");
 const collectionName = "horoscope";
 
-const horoscopeNames = [
-    "baiyang",
-    "jinniu",
-    "shuangzi",
-    "juxie",
-    "shizi",
-    "chunv",
-    "tianping",
-    "tianxie",
-    "sheshou",
-    "mojie",
-    "shuiping",
-    "shuangyu",
-];
-
-const requestTypes = ["today", "tomorrow", "week", "month", "year"];
 const db = uniCloud.database();
 // 云函数入口函数
 const requestHoroscope = async (event) => {
     let name = event.name;
     let type = event.type;
-    let id = event.id ? event.id : getDbId(name, type);
-    if (!horoscopeNames.includes(name) || !requestTypes.includes(type)) {
-        return {
-            err: `Invalid name or type: ${name}, ${type}`,
-        };
-    }
+    let id = event.id;
     let result = await getConsFromDb(id);
-    if (result && !result.err && result.length > 0) {
+    console.log(result);
+    if (result && !result.err) {
         console.log("====== cloud obj 数据库命中：", result);
         return result;
     }
@@ -37,15 +17,10 @@ const requestHoroscope = async (event) => {
     if (!responseData || responseData.err) {
         return responseData;
     }
-    console.log("====== cloud obj 聚合数据命中：", result);
+    console.log("====== cloud obj 聚合数据命中：", responseData);
     await insertOrUpdateToDb(id, responseData);
     return await getConsFromDb(id);
 };
-
-function getDbId(name, type) {
-    let keyDate = getKeyDate(type);
-    return name + "." + type + "." + keyDate;
-}
 
 async function getConsFromDb(id) {
     return db
@@ -94,75 +69,7 @@ async function insertOrUpdateToDb(id, data) {
         });
 }
 
-function getDay(plusDay = 0) {
-    let date = new Date();
-    date.setDate(date.getDate() + plusDay);
-    let year = date.getFullYear();
-    let month = String(date.getMonth() + 1);
-    month = month.length <= 1 ? "0" + month : month;
-    let day = String(date.getDate());
-    day = day.length <= 1 ? "0" + day : day;
-    return year + month + day;
-}
 
-function getKeyDate(type) {
-    initGetWeek();
-    switch (type) {
-        case "today":
-            return getDay();
-        case "tomorrow":
-            return getDay(1);
-        case "week":
-            return new Date().getWeek();
-        case "month":
-            return new Date().getMonth() + 1;
-        case "year":
-            return new Date().getUTCFullYear();
-        default:
-            return "unknown";
-    }
-}
-
-function initGetWeek() {
-    /**
-     * Returns the week number for this date.  dowOffset is the day of week the week
-     * "starts" on for your locale - it can be from 0 to 6. If dowOffset is 1 (Monday),
-     * the week returned is the ISO 8601 week number.
-     * @param int dowOffset
-     * @return int
-     */
-    Date.prototype.getWeek = function(dowOffset) {
-        /*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.meanfreepath.com */
-
-        dowOffset = typeof dowOffset == "int" ? dowOffset : 0; //default dowOffset to zero
-        var newYear = new Date(this.getFullYear(), 0, 1);
-        var day = newYear.getDay() - dowOffset; //the day of week the year begins on
-        day = day >= 0 ? day : day + 7;
-        var daynum =
-            Math.floor(
-                (this.getTime() -
-                    newYear.getTime() -
-                    (this.getTimezoneOffset() - newYear.getTimezoneOffset()) * 60000) /
-                86400000
-            ) + 1;
-        var weeknum;
-        //if the year starts before the middle of a week
-        if (day < 4) {
-            weeknum = Math.floor((daynum + day - 1) / 7) + 1;
-            if (weeknum > 52) {
-                nYear = new Date(this.getFullYear() + 1, 0, 1);
-                nday = nYear.getDay() - dowOffset;
-                nday = nday >= 0 ? nday : nday + 7;
-                /*if the next year starts before the middle of
-                  the week, it is week #1 of that year*/
-                weeknum = nday < 4 ? 1 : 53;
-            }
-        } else {
-            weeknum = Math.floor((daynum + day - 1) / 7);
-        }
-        return weeknum;
-    };
-}
 
 module.exports = {
     requestHoroscope

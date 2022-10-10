@@ -5,17 +5,19 @@ import {
 export const getHoroscope = async (index, type) => {
     const horoscope = horoscopes[index];
     const cloudObj = uniCloud.importObject('cloud-obj-main');
+    const id = getDBId(horoscope.name, type);
     try {
-        let res = uni.getStorageSync(getDBId(horoscope.id, type));
+        let res = uni.getStorageSync(id);
         if (!res || !res.data) {
             res = await cloudObj.getHoroscope({
-                name: horoscope.id,
+                id,
+                name: horoscope.name,
                 type: type
             });
             if (!res || !res.data) {
                 throw res;
             }
-            uni.setStorageSync(getDBId(horoscope.id, type), res);
+            uni.setStorageSync(id, res);
         }
         console.log(res);
         res.data.symbol = horoscope.symbol;
@@ -65,6 +67,9 @@ function getKeyDate(type) {
 }
 
 function initGetWeek() {
+    if (Date.prototype.getWeek) {
+        return;
+    }
     /**
      * Returns the week number for this date.  dowOffset is the day of week the week
      * "starts" on for your locale - it can be from 0 to 6. If dowOffset is 1 (Monday),

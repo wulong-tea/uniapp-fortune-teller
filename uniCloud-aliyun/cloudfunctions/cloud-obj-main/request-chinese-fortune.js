@@ -7,8 +7,9 @@ const db = uniCloud.database();
 // 云函数入口函数
 const requestChineseFortune = async () => {
   let result = await getFortuneFromDb();
-  console.log(result);
-  if (!result.err && result.data.length > 0) {
+
+  if (result && !result.err) {
+    console.log("cloud obj request chinese fortune 数据库命中", result);
     return result.data[0].data.result.data;
   }
   result = await requestChinesdDayFortune();
