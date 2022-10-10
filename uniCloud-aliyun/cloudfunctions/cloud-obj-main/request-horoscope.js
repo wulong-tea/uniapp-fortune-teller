@@ -1,5 +1,6 @@
 const rp = require("request-promise");
 const collectionName = "horoscope";
+const config = require("./config.js");
 
 const db = uniCloud.database();
 // 云函数入口函数
@@ -40,7 +41,7 @@ async function getConsFromDb(id) {
 //从聚合数据接口请求星座数据
 async function requestCons(name, type) {
     let url =
-        `http://web.juhe.cn:8080/constellation/getAll?consName=${name}&type=${type}&key=0bfbde9b2d646d5b43423876dc21d123`;
+        `http://web.juhe.cn:8080/constellation/getAll?consName=${name}&type=${type}&key=${config.juhe.horoscopeKey}`;
     url = encodeURI(url);
     return await rp(url)
         .then(function(res) {
