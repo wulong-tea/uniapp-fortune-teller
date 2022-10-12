@@ -52,6 +52,9 @@ export default {
     mounted() {},
     methods: {},
     async created() {
+        this.horoscope = null;
+    },
+    async mounted() {
         this.horoscope = await getHoroscope(this.index, 'today');
     },
     data() {

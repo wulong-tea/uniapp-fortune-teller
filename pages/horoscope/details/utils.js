@@ -19,11 +19,9 @@ export const getHoroscope = async (index, type) => {
             }
             uni.setStorageSync(id, res);
         }
-        console.log(res);
         res.data.symbol = horoscope.symbol;
         return res.data;
     } catch (e) {
-        console.log(e);
         uni.showModal({
             title: '数据请求失败' + JSON.stringify(e.err.reason),
             showCancel: false

@@ -9,7 +9,6 @@ const requestHoroscope = async (event) => {
     let type = event.type;
     let id = event.id;
     let result = await getConsFromDb(id);
-    console.log(result);
     if (result && !result.err) {
         console.log("====== cloud obj 数据库命中：", result);
         return result;
