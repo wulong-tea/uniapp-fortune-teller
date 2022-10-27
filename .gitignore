@@ -2,3 +2,4 @@
 unpackage/
 .hbuilderx/launch.json
 node_modules/
+/uniCloud-aliyun/cloudfunctions/cloud-obj-main/config.js
